@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class Drawer : MonoBehaviour
 {
     [SerializeField] private LayerMask _ignoreLayer;
+    [SerializeField] private UnityEvent OnStartDraw;
     [SerializeField] private UnityEvent OnEndDraw;
     private Camera _camera;
     private Line _currentLine;
@@ -51,7 +52,10 @@ public class Drawer : MonoBehaviour
     private void InstantiateLine(Vector2 touchPosition)
     {
        if (IsTouchDrawingPoint(touchPosition, out StartDrawingPoint drawingPoint))
+        {
             _currentLine = drawingPoint.InstantiateLine(_camera.ScreenToWorldPoint(touchPosition));
+            OnStartDraw?.Invoke();
+        }
     }
 
     private bool IsTouchDrawingPoint<T>(Vector2 touchPosition, out T drawingPoint) where T : MonoBehaviour

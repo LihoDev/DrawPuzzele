@@ -16,6 +16,8 @@ public class Victory : EndGameMenu
 
     private void StartNextLevel()
     {
+        if (string.IsNullOrEmpty(_nextScene))
+            return;
         SceneManager.LoadScene(_nextScene);
     }
 }
