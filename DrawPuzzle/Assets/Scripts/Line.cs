@@ -5,6 +5,8 @@ public class Line : MonoBehaviour
 {
     private LineRenderer _lineRenderer;
     [SerializeField, Min(0)] private float _segmentFrequency = 0.1f;
+    [SerializeField] private Party _party = Party.Blue;
+    public Party Party { get => _party; }
 
     public void DrawSegment(Vector2 position)
     {
@@ -20,16 +22,6 @@ public class Line : MonoBehaviour
         _lineRenderer.GetPositions(points);
         return points;
     }
-
-    //public float GetLineDistance()
-    //{
-    //    float distance = 0;
-    //    Vector3[] points = new Vector3[_lineRenderer.positionCount];
-    //    _lineRenderer.GetPositions(points);
-    //    for (var i = 1; i < points.Length; i++)
-    //        distance += (points[i - 1] - points[i]).sqrMagnitude;
-    //    return distance;
-    //}
 
     private void Awake()
     {

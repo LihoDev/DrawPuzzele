@@ -41,7 +41,7 @@ public class Drawer : MonoBehaviour
     {
         if (_currentLine == null)
             return;
-        if (!IsTouchDrawingPoint(touchPosition, out EndDrawingPoint drawingPoint))
+        if (!IsTouchDrawingPoint(touchPosition, out EndDrawingPoint drawingPoint) || (_currentLine.Party != drawingPoint.Party && drawingPoint.Party != Party.Universal))
             Destroy(_currentLine.gameObject);
         else
             OnEndDraw?.Invoke();
