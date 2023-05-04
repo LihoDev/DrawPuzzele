@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class Drawer : MonoBehaviour
 {
+    [SerializeField] private LayerMask _ignoreLayer;
     [SerializeField] private UnityEvent OnEndDraw;
     private Camera _camera;
     private Line _currentLine;
@@ -55,7 +56,7 @@ public class Drawer : MonoBehaviour
     private bool IsTouchDrawingPoint<T>(Vector2 touchPosition, out T drawingPoint) where T : MonoBehaviour
     {
         drawingPoint = null;
-        RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(touchPosition), Vector3.back);
+        RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(touchPosition), Vector3.back, 100, ~_ignoreLayer);
         return (hit.transform != null && hit.transform.gameObject.TryGetComponent(out drawingPoint));
     }
 
