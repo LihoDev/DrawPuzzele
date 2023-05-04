@@ -8,6 +8,7 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private StartDrawingPoint _startPoint;
     [SerializeField] private float _minDistanceToPoint = 0.1f;
     [SerializeField] private UnityEvent OnCollision;
+    [SerializeField] private UnityEvent OnEndRoute;
     private Coroutine _movement;
     private Line _route;
     
@@ -52,5 +53,6 @@ public class CharacterMover : MonoBehaviour
             previousPosition = transform.position;
             elapsedTime = 0;
         }
+        OnEndRoute?.Invoke();
     }
 }

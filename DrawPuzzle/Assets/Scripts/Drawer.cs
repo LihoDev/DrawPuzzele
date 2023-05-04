@@ -45,6 +45,7 @@ public class Drawer : MonoBehaviour
             Destroy(_currentLine.gameObject);
         else
             OnEndDraw?.Invoke();
+        _currentLine = null;
     }
 
     private void InstantiateLine(Vector2 touchPosition)
