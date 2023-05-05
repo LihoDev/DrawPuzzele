@@ -32,7 +32,7 @@ public class CharacterMover : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out CharacterMover character))
+        if (collision.gameObject.TryGetComponent(out Obstacle obstacle))
             OnCollision?.Invoke();
     }
 

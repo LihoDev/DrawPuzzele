@@ -51,7 +51,7 @@ public class Drawer : MonoBehaviour
 
     private void InstantiateLine(Vector2 touchPosition)
     {
-       if (IsTouchDrawingPoint(touchPosition, out StartDrawingPoint drawingPoint))
+       if (IsTouchDrawingPoint(touchPosition, out StartDrawingPoint drawingPoint) && drawingPoint.GetLine() == null)
         {
             _currentLine = drawingPoint.InstantiateLine(_camera.ScreenToWorldPoint(touchPosition));
             OnStartDraw?.Invoke();
