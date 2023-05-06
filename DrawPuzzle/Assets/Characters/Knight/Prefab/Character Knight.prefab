@@ -157,6 +157,7 @@ MonoBehaviour:
   _startPoint: {fileID: 0}
   _minDistanceToPoint: 0.001
   _animator: {fileID: 7394211364968718718}
+  _spriteRenderer: {fileID: 4551098141108078882}
   OnCollision:
     m_PersistentCalls:
       m_Calls:

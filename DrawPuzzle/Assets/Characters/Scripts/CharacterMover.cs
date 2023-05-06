@@ -8,6 +8,8 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private StartDrawingPoint _startPoint;
     [SerializeField] private float _minDistanceToPoint = 0.1f;
     [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private bool _defaultFlipX = false;
     [SerializeField] private UnityEvent OnCollision;
     [SerializeField] private UnityEvent OnEndRoute;
     private Coroutine _movement;
@@ -30,6 +32,12 @@ public class CharacterMover : MonoBehaviour
     public void StopMoving()
     {
         StopCoroutine(_movement);
+        _animator.SetTrigger("Idle");
+    }
+
+    private void Start()
+    {
+        _spriteRenderer.flipX = _defaultFlipX;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -57,12 +65,15 @@ public class CharacterMover : MonoBehaviour
             while ((point - transform.position).sqrMagnitude > _minDistanceToPoint)
             {
                 transform.position = Vector3.Lerp(previousPosition, point, elapsedTime / segmentDuration);
+                if ((transform.position - previousPosition).x < 0) 
+                    _spriteRenderer.flipX = !_spriteRenderer.flipX;
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
             previousPosition = transform.position;
             elapsedTime = 0;
         }
+        _animator.SetTrigger("Idle");
         OnEndRoute?.Invoke();
     }
 }
