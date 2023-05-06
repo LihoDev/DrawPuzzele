@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2344133138511287366}
   - component: {fileID: 4551098141108078882}
   - component: {fileID: 7394211364968718718}
+  - component: {fileID: 6347753553967119785}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1998171240948437090}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5716503836030058408}
@@ -106,6 +107,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6347753553967119785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998171240948437090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d160388ad8b2eb4fbca93e33f4240bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animatorController: {fileID: 22100000, guid: 13a267ca42ead7546b782f3a52e9f208, type: 2}
 --- !u!1 &5716503836030058423
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +172,7 @@ MonoBehaviour:
   _minDistanceToPoint: 0.001
   _animator: {fileID: 7394211364968718718}
   _spriteRenderer: {fileID: 4551098141108078882}
+  _defaultFlipX: 0
   OnCollision:
     m_PersistentCalls:
       m_Calls:

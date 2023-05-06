@@ -12,14 +12,6 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private bool _defaultFlipX = false;
     [SerializeField] private UnityEvent OnCollision;
     [SerializeField] private UnityEvent OnEndRoute;
-    //private bool _flipX;
-    //private bool FlipX 
-    //{ 
-    //    set
-    //    {
-    //        _flipX = _defaultFlipX ^ value;
-    //    }
-    //}
     private Coroutine _movement;
     private Line _route;
     
