@@ -9,7 +9,6 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private float _minDistanceToPoint = 0.1f;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private bool _defaultFlipX = false;
     [SerializeField] private UnityEvent OnCollision;
     [SerializeField] private UnityEvent OnEndRoute;
     private Coroutine _movement;
@@ -35,11 +34,6 @@ public class CharacterMover : MonoBehaviour
         _animator.SetTrigger("Idle");
     }
 
-    private void Start()
-    {
-        _spriteRenderer.flipX = _defaultFlipX;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out CharacterMover character)) 
@@ -56,20 +50,26 @@ public class CharacterMover : MonoBehaviour
 
     private IEnumerator MoveCharacter()
     {
-        Vector3 previousPosition = transform.position;
+        Vector3 previousPointPosition = transform.position;
+        Vector3 previousFramePosition = transform.position;
         Vector3[] points = _route.GetPoints();
-        float elapsedTime = 0;
+        bool moveRight = false;
+        float elapsedTime = 0f;
         float segmentDuration = _movementDuration / points.Length;
         foreach (var point in points)
         {
             while ((point - transform.position).sqrMagnitude > _minDistanceToPoint)
             {
-                transform.position = Vector3.Lerp(previousPosition, point, elapsedTime / segmentDuration);
-                _spriteRenderer.flipX = _defaultFlipX ^ (transform.position.x - previousPosition.x) < 0;
+                transform.position = Vector3.Lerp(previousPointPosition, point, elapsedTime / segmentDuration);
+                if (moveRight != transform.position.x > previousFramePosition.x)
+                    _spriteRenderer.flipX = !_spriteRenderer.flipX;
+                moveRight = transform.position.x > previousFramePosition.x;
+                previousFramePosition = transform.position;
                 elapsedTime += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
-            previousPosition = transform.position;
+    
+            previousPointPosition = transform.position;
             elapsedTime = 0;
         }
         _animator.SetTrigger("Idle");
