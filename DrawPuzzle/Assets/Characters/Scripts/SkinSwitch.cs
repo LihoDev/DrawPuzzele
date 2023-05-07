@@ -16,11 +16,16 @@ public class SkinSwitch : MonoBehaviour
 
     private void Start()
     {
+        InstantiatePrefabs();
+    }
+
+    private void InstantiatePrefabs()
+    {
         foreach (var skin in _characters)
             for (var i = 0; i < skin.GetPreviewCount(); i++)
             {
                 SkinPreview preview = Instantiate(_skinPreviewPrefab, Vector3.zero, Quaternion.identity, _scrollViewContent).GetComponent<SkinPreview>();
-                preview.SetSkin(skin, i, delegate { RefreshDisplaySelection(); }) ;
+                preview.SetSkin(skin, i, delegate { RefreshDisplaySelection(); });
                 _previews.Add(preview);
             }
     }
