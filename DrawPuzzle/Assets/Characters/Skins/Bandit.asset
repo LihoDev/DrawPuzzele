@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1c10835eec88b4681ffb0805e49873, type: 3}
+  m_Name: Bandit
+  m_EditorClassIdentifier: 
+  _animators:
+  - {fileID: 22100000, guid: 08c66f19a3f5fa243ab21f606a32ef82, type: 2}
+  - {fileID: 22100000, guid: 4dac839eec6dd26449fb2cdf92667651, type: 2}
+  _selected: 0

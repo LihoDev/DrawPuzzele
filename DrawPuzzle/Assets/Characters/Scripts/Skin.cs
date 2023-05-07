@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Skin : MonoBehaviour
 {
-    [SerializeField] private AnimatorOverrideController _animatorController;
+    [SerializeField] private CharacterSkins _skins;
     private Animator _animator;
 
     private void Awake()
@@ -13,6 +13,6 @@ public class Skin : MonoBehaviour
 
     private void Start()
     {
-        _animator.runtimeAnimatorController = _animatorController;
+        _animator.runtimeAnimatorController = _skins.GetAnimatorController(SkinSwitch.GetSelectedIndex(_skins));
     }
 }
