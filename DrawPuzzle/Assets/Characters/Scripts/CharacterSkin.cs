@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Skin : MonoBehaviour
+public class CharacterSkin : MonoBehaviour
 {
     [SerializeField] private CharacterSkins _characterSkins;
     private Animator _animator;
@@ -13,7 +13,6 @@ public class Skin : MonoBehaviour
 
     private void Start()
     {
-        _animator.runtimeAnimatorController = _characterSkins.AnimatorController;
-        //_animator.runtimeAnimatorController = _skins.GetAnimatorController(SkinSwitch.GetSelectedIndex(_skins));
+        _animator.runtimeAnimatorController = _characterSkins.Sprite;
     }
 }

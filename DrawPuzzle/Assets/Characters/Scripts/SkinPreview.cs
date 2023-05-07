@@ -6,11 +6,11 @@ public class SkinPreview : MonoBehaviour
 {
     [SerializeField] private Image _image;
     [SerializeField] private Color32 _notSelected;
-    private CharacterSkins _character;
+    private SkinsPreview _character;
     private int _selected;
     private UnityAction OnChooseSkin;
 
-    public void SetSkin(CharacterSkins skin, int index, UnityAction onChooseSkin)
+    public void SetSkin(SkinsPreview skin, int index, UnityAction onChooseSkin)
     {
         _character = skin;
         _selected = index;
@@ -28,6 +28,5 @@ public class SkinPreview : MonoBehaviour
     {
         _character.Selected = _selected;
         OnChooseSkin?.Invoke();
-        //SkinSwitch.ChooseSkin(_skins, _index);
     }
 }

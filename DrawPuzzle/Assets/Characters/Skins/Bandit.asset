@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1c10835eec88b4681ffb0805e49873, type: 3}
   m_Name: Bandit
   m_EditorClassIdentifier: 
-  _animators:
+  _skins:
   - {fileID: 22100000, guid: 08c66f19a3f5fa243ab21f606a32ef82, type: 2}
   - {fileID: 22100000, guid: 4dac839eec6dd26449fb2cdf92667651, type: 2}
   _preview:

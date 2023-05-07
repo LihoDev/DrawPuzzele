@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1c10835eec88b4681ffb0805e49873, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
-  _animators:
+  _skins:
   - {fileID: 22100000, guid: 13a267ca42ead7546b782f3a52e9f208, type: 2}
   - {fileID: 22100000, guid: ec9b98ee57c0fd549870aa7d4b91a15d, type: 2}
   _preview:

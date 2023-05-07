@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697b1832093d5ff459d54e4940e3afd6, type: 3}
+  m_Name: Blue point
+  m_EditorClassIdentifier: 
+  _skins:
+  - {fileID: 21300000, guid: dd41ea2d7bf7c1c4b9748b3ce503d1b6, type: 3}
+  - {fileID: 21300000, guid: 4ca5dfd89886f5a4eb4983d829772732, type: 3}
+  _preview:
+  - {fileID: 21300000, guid: dd41ea2d7bf7c1c4b9748b3ce503d1b6, type: 3}
+  - {fileID: 21300000, guid: 4ca5dfd89886f5a4eb4983d829772732, type: 3}
