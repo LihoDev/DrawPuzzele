@@ -15,4 +15,6 @@ MonoBehaviour:
   _animators:
   - {fileID: 22100000, guid: 13a267ca42ead7546b782f3a52e9f208, type: 2}
   - {fileID: 22100000, guid: ec9b98ee57c0fd549870aa7d4b91a15d, type: 2}
-  _selected: 0
+  _preview:
+  - {fileID: 21300000, guid: 9797999f53bee344cbf42f87ab6b162d, type: 3}
+  - {fileID: 21300000, guid: 8ab631ccafe4a034fa5b6b598b0e2807, type: 3}

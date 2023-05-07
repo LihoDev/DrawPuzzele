@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class LevelStarter : MonoBehaviour
 {
     [SerializeField] private string _nextScene;
+    [SerializeField] private string _mainMenu;
 
     public void StartLevel()
     {
@@ -15,5 +16,12 @@ public class LevelStarter : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnMainMenu()
+    {
+        if (string.IsNullOrEmpty(_nextScene))
+            return;
+        SceneManager.LoadScene(_mainMenu);
     }
 }

@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d160388ad8b2eb4fbca93e33f4240bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animatorController: {fileID: 22100000, guid: 13a267ca42ead7546b782f3a52e9f208, type: 2}
+  _characterSkins: {fileID: 11400000, guid: 2b31fdb7b9b0e944bab50d0b151cdf9b, type: 2}
 --- !u!1 &5716503836030058423
 GameObject:
   m_ObjectHideFlags: 0
