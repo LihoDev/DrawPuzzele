@@ -20,7 +20,7 @@ public class LevelStarter : MonoBehaviour
 
     public void ReturnMainMenu()
     {
-        if (string.IsNullOrEmpty(_nextScene))
+        if (string.IsNullOrEmpty(_mainMenu))
             return;
         SceneManager.LoadScene(_mainMenu);
     }
