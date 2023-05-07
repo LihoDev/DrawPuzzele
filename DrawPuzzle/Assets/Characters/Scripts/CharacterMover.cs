@@ -65,9 +65,9 @@ public class CharacterMover : MonoBehaviour
             while ((point - transform.position).sqrMagnitude > _minDistanceToPoint)
             {
                 transform.position = Vector3.Lerp(previousPosition, point, elapsedTime / segmentDuration);
-                _spriteRenderer.flipX = _defaultFlipX ^ (transform.position - previousPosition).x < 0;
+                _spriteRenderer.flipX = _defaultFlipX ^ (transform.position.x - previousPosition.x) < 0;
                 elapsedTime += Time.deltaTime;
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
             previousPosition = transform.position;
             elapsedTime = 0;
