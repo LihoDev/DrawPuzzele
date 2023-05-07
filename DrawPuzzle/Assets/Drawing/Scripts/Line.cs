@@ -23,6 +23,15 @@ public class Line : MonoBehaviour
         return points;
     }
 
+    public float GetLength()
+    {
+        Vector3[] points = GetPoints();
+        float length = 0f;
+        for (var i = 1; i< points.Length; i++)
+            length += Vector2.Distance(points[i - 1], points[i]);
+        return length;
+    }
+
     private void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();

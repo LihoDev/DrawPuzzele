@@ -9,6 +9,7 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private float _minDistanceToPoint = 0.1f;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private bool _invertFlipX;
     [SerializeField] private UnityEvent OnCollision;
     [SerializeField] private UnityEvent OnEndRoute;
     private Coroutine _movement;
@@ -50,27 +51,27 @@ public class CharacterMover : MonoBehaviour
 
     private IEnumerator MoveCharacter()
     {
-        Vector3 previousPointPosition = transform.position;
         Vector3 previousFramePosition = transform.position;
         Vector3[] points = _route.GetPoints();
-        bool moveRight = false;
-        float elapsedTime = 0f;
-        float segmentDuration = _movementDuration / points.Length;
-        foreach (var point in points)
+        float fullDistance = _route.GetLength();
+        float distanceNextPoint = 0;
+        float lastPointTime;
+        float nextPointTime;
+        float elapsedTime = 0;
+        for (var i = 0; i < points.Length - 1; i++)
         {
-            while ((point - transform.position).sqrMagnitude > _minDistanceToPoint)
+            distanceNextPoint += Vector3.Distance(points[i], points[i + 1]);
+            lastPointTime = elapsedTime;
+            nextPointTime = (_movementDuration * distanceNextPoint) / fullDistance;
+            while ((points[i + 1] - transform.position).sqrMagnitude > _minDistanceToPoint)
             {
-                transform.position = Vector3.Lerp(previousPointPosition, point, elapsedTime / segmentDuration);
-                if (moveRight != transform.position.x > previousFramePosition.x)
-                    _spriteRenderer.flipX = !_spriteRenderer.flipX;
-                moveRight = transform.position.x > previousFramePosition.x;
+                elapsedTime+= Time.deltaTime;
+                transform.position = Vector3.Lerp(points[i], points[i + 1], elapsedTime / (nextPointTime - lastPointTime));
+                distanceNextPoint += Vector3.Distance(transform.position, previousFramePosition);
+                _spriteRenderer.flipX = _invertFlipX ^ transform.position.x > previousFramePosition.x;
                 previousFramePosition = transform.position;
-                elapsedTime += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
-    
-            previousPointPosition = transform.position;
-            elapsedTime = 0;
         }
         _animator.SetTrigger("Idle");
         OnEndRoute?.Invoke();
