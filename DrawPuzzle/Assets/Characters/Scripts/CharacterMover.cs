@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +27,9 @@ public class CharacterMover : MonoBehaviour
         if (_route == null)
             return;
         _animator.SetTrigger("Run");
-        _movement = StartCoroutine(MoveCharacter());
+        Task task = new Task(() => MoveCharacter());
+        task.Start();
+        //_movement = StartCoroutine(MoveCharacter());
     }
 
     public void StopMoving()
@@ -49,31 +52,50 @@ public class CharacterMover : MonoBehaviour
         }       
     }
 
-    private IEnumerator MoveCharacter()
+    //private async Task Moving()
+    //{
+    //    await Task.Run(() => MoveCharacter());
+    //}
+
+    private void MoveCharacter()
     {
-        Vector3 previousFramePosition = transform.position;
+        float time = 0;
+        int indexPoint = 0;
         Vector3[] points = _route.GetPoints();
-        float fullDistance = _route.GetLength();
-        float distanceNextPoint = 0;
-        float lastPointTime;
-        float nextPointTime;
-        float elapsedTime = 0;
-        for (var i = 0; i < points.Length - 1; i++)
+        while (time <= _movementDuration)
         {
-            distanceNextPoint += Vector3.Distance(points[i], points[i + 1]);
-            lastPointTime = elapsedTime;
-            nextPointTime = (_movementDuration * distanceNextPoint) / fullDistance;
-            while ((points[i + 1] - transform.position).sqrMagnitude > _minDistanceToPoint)
-            {
-                elapsedTime+= Time.deltaTime;
-                transform.position = Vector3.Lerp(points[i], points[i + 1], elapsedTime / (nextPointTime - lastPointTime));
-                distanceNextPoint += Vector3.Distance(transform.position, previousFramePosition);
-                _spriteRenderer.flipX = _invertFlipX ^ transform.position.x > previousFramePosition.x;
-                previousFramePosition = transform.position;
-                yield return new WaitForEndOfFrame();
-            }
+            transform.position = Vector3.Lerp(points[indexPoint - 1], points[indexPoint], time / _movementDuration); //Vector3.MoveTowards(transform.position, points[0])
+            if ((points[indexPoint] - transform.position).sqrMagnitude > _minDistanceToPoint && indexPoint + 1 < points.Length)
+                indexPoint++;
+            time += Time.deltaTime;
         }
-        _animator.SetTrigger("Idle");
-        OnEndRoute?.Invoke();
     }
+
+    //private IEnumerator MoveCharacter()
+    //{
+    //    Vector3 previousFramePosition = transform.position;
+    //    Vector3[] points = _route.GetPoints();
+    //    float fullDistance = _route.GetLength();
+    //    float distanceNextPoint = 0;
+    //    float lastPointTime;
+    //    float nextPointTime;
+    //    float elapsedTime = 0;
+    //    for (var i = 0; i < points.Length - 1; i++)
+    //    {
+    //        distanceNextPoint += Vector3.Distance(points[i], points[i + 1]);
+    //        lastPointTime = elapsedTime;
+    //        nextPointTime = (_movementDuration * distanceNextPoint) / fullDistance;
+    //        while ((points[i + 1] - transform.position).sqrMagnitude > _minDistanceToPoint)
+    //        {
+    //            elapsedTime+= Time.deltaTime;
+    //            transform.position = Vector3.Lerp(points[i], points[i + 1], elapsedTime / (nextPointTime - lastPointTime));
+    //            distanceNextPoint += Vector3.Distance(transform.position, previousFramePosition);
+    //            _spriteRenderer.flipX = _invertFlipX ^ transform.position.x > previousFramePosition.x;
+    //            previousFramePosition = transform.position;
+    //            yield return new WaitForEndOfFrame();
+    //        }
+    //    }
+    //    _animator.SetTrigger("Idle");
+    //    OnEndRoute?.Invoke();
+    //}
 }
