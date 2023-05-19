@@ -27,9 +27,11 @@ public class CharacterMover : MonoBehaviour
         if (_route == null)
             return;
         _animator.SetTrigger("Run");
-        Task task = new Task(() => MoveCharacter());
-        task.Start();
-        //_movement = StartCoroutine(MoveCharacter());
+        //Task task = new Task(() => MoveCharacter());
+        
+        //Moving();
+        // task.Start();
+        _movement = StartCoroutine(MoveCharacter());
     }
 
     public void StopMoving()
@@ -57,16 +59,19 @@ public class CharacterMover : MonoBehaviour
     //    await Task.Run(() => MoveCharacter());
     //}
 
-    private void MoveCharacter()
+    private IEnumerator MoveCharacter()
     {
         float time = 0;
-        int indexPoint = 0;
+        int indexPoint = 1;
         Vector3[] points = _route.GetPoints();
+        Vector3 startPosition = transform.position;
         while (time <= _movementDuration)
         {
-            transform.position = Vector3.Lerp(points[indexPoint - 1], points[indexPoint], time / _movementDuration); //Vector3.MoveTowards(transform.position, points[0])
-            if ((points[indexPoint] - transform.position).sqrMagnitude > _minDistanceToPoint && indexPoint + 1 < points.Length)
+            transform.position = startPosition + (points[indexPoint] - startPosition) * (time / _movementDuration); //Vector3.Lerp(points[indexPoint - 1], points[indexPoint], time / _movementDuration); //Vector3.MoveTowards(transform.position, points[0])
+            if ((points[indexPoint] - transform.position).sqrMagnitude <= _minDistanceToPoint && indexPoint + 1 < points.Length)
                 indexPoint++;
+            Debug.Log(time / _movementDuration);
+            yield return new WaitForEndOfFrame();
             time += Time.deltaTime;
         }
     }
