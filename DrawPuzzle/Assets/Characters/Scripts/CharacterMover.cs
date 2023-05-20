@@ -6,7 +6,6 @@ public class CharacterMover : MonoBehaviour
 {
     [SerializeField] private float _movementDuration = 3f;
     [SerializeField] private StartDrawingPoint _startPoint;
-    [SerializeField] private float _minDistanceToPoint = 0.1f;
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private bool _invertFlipX;
@@ -51,27 +50,28 @@ public class CharacterMover : MonoBehaviour
 
     private IEnumerator MoveCharacter()
     {
-        Vector3 previousFramePosition = transform.position;
         Vector3[] points = _route.GetPoints();
-        float fullDistance = _route.GetLength();
-        float distanceNextPoint = 0;
-        float lastPointTime;
-        float nextPointTime;
-        float elapsedTime = 0;
-        for (var i = 0; i < points.Length - 1; i++)
+        Vector3 previousFramePosition = transform.position;
+        float speed = _route.GetLength() / _movementDuration;
+        int indexPoint = 1;
+        transform.position = points[0];
+        while (indexPoint + 1 < points.Length)
         {
-            distanceNextPoint += Vector3.Distance(points[i], points[i + 1]);
-            lastPointTime = elapsedTime;
-            nextPointTime = (_movementDuration * distanceNextPoint) / fullDistance;
-            while ((points[i + 1] - transform.position).sqrMagnitude > _minDistanceToPoint)
+            if ((points[indexPoint] - transform.position).normalized == Vector3.zero && indexPoint + 1 < points.Length)
+                indexPoint++;
+            Vector3 newPosition = transform.position + (points[indexPoint] - transform.position).normalized * speed * Time.deltaTime;
+            float pointDistance = 0; 
+            float newPositionDistance = Vector3.Distance(transform.position, newPosition);
+            while (Vector3.Distance(transform.position, newPosition) > Vector3.Distance(transform.position, points[indexPoint]) && indexPoint + 1 < points.Length)
             {
-                elapsedTime+= Time.deltaTime;
-                transform.position = Vector3.Lerp(points[i], points[i + 1], elapsedTime / (nextPointTime - lastPointTime));
-                distanceNextPoint += Vector3.Distance(transform.position, previousFramePosition);
-                _spriteRenderer.flipX = _invertFlipX ^ transform.position.x > previousFramePosition.x;
-                previousFramePosition = transform.position;
-                yield return new WaitForEndOfFrame();
+                pointDistance += Vector3.Distance(transform.position, points[indexPoint]);
+                transform.position = points[indexPoint];
+                indexPoint++;
             }
+            transform.position = transform.position + (points[indexPoint] - transform.position).normalized * (newPositionDistance - pointDistance); 
+            _spriteRenderer.flipX = _invertFlipX ^ transform.position.x > previousFramePosition.x;
+            previousFramePosition = transform.position;
+            yield return new WaitForEndOfFrame();
         }
         _animator.SetTrigger("Idle");
         OnEndRoute?.Invoke();
